@@ -309,6 +309,23 @@ async function loadRecords() {
 
 function saveRecordsToStorage() {
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(records));
+    
+    // Auto-save to disk via local server API
+    fetch('/api/save', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(records)
+    })
+    .then(response => {
+        if (!response.ok) {
+            console.warn("Server responded with error while auto-saving CSV.");
+        }
+    })
+    .catch(err => {
+        console.warn("Local server auto-save offline or unavailable:", err);
+    });
 }
 
 // ─── Dropdowns & Date Setup ─────────────────────────────────────────────
