@@ -233,6 +233,8 @@ let formMarker = null;
 let dashboardMapLayers = [];
 let charts = {};
 let editingRecordId = null; // Track editing state
+let currentTablePage = 1;   // Track current table pagination page
+const RECORDS_PER_PAGE = 20; // Number of table records per page
 
 // ─── App Boot ───────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', initApp);
@@ -454,6 +456,7 @@ function applyFilters() {
     // Sort chronologically
     filteredRecords.sort((a, b) => new Date(a.date) - new Date(b.date));
     
+    currentTablePage = 1; // Reset table page to first page
     updateDashboardUI();
 }
 
@@ -705,6 +708,7 @@ function renderMunicipalityChart() {
 function populateTable() {
     const tbody = document.getElementById('recordsTableBody');
     const emptyMsg = document.getElementById('emptyTableMessage');
+    const paginationContainer = document.getElementById('tablePagination');
     tbody.innerHTML = '';
     
     const searchQuery = (document.getElementById('tableSearch')?.value || '').toLowerCase().trim();
@@ -721,6 +725,7 @@ function populateTable() {
     
     if (searchedRecords.length === 0) {
         emptyMsg.style.display = 'block';
+        if (paginationContainer) paginationContainer.style.display = 'none';
         return;
     }
     emptyMsg.style.display = 'none';
@@ -728,7 +733,26 @@ function populateTable() {
     // Sort records descending by date for the table (latest records first)
     const tableSortedRecords = [...searchedRecords].reverse();
     
-    tableSortedRecords.forEach(rec => {
+    // Calculate pages
+    const totalPages = Math.ceil(tableSortedRecords.length / RECORDS_PER_PAGE);
+    if (currentTablePage > totalPages) {
+        currentTablePage = Math.max(1, totalPages);
+    }
+    
+    const startIdx = (currentTablePage - 1) * RECORDS_PER_PAGE;
+    const endIdx = startIdx + RECORDS_PER_PAGE;
+    const pageRecords = tableSortedRecords.slice(startIdx, endIdx);
+    
+    // Update pagination info
+    const showingFrom = startIdx + 1;
+    const showingTo = Math.min(endIdx, tableSortedRecords.length);
+    const infoText = `Mostrando ${showingFrom}-${showingTo} de ${tableSortedRecords.length} registros`;
+    const paginationInfoEl = document.getElementById('paginationInfo');
+    if (paginationInfoEl) {
+        paginationInfoEl.textContent = infoText;
+    }
+    
+    pageRecords.forEach(rec => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
             <td class="date-value">${formatDateString(rec.date)}</td>
@@ -743,6 +767,69 @@ function populateTable() {
         `;
         tbody.appendChild(tr);
     });
+    
+    renderTablePagination(tableSortedRecords.length, currentTablePage);
+}
+
+function renderTablePagination(totalItems, currentPage) {
+    const container = document.getElementById('paginationButtons');
+    const paginationEl = document.getElementById('tablePagination');
+    if (!container || !paginationEl) return;
+    
+    const totalPages = Math.ceil(totalItems / RECORDS_PER_PAGE);
+    if (totalPages <= 1) {
+        paginationEl.style.display = 'none';
+        return;
+    }
+    paginationEl.style.display = 'flex';
+    container.innerHTML = '';
+    
+    // Helper to create a button
+    const createBtn = (text, pageNum, isActive = false, isDisabled = false) => {
+        const btn = document.createElement('button');
+        btn.className = `btn-pagination${isActive ? ' active' : ''}`;
+        btn.textContent = text;
+        btn.disabled = isDisabled;
+        if (!isDisabled && !isActive) {
+            btn.addEventListener('click', () => {
+                currentTablePage = pageNum;
+                populateTable();
+            });
+        }
+        return btn;
+    };
+    
+    // Previous page buttons
+    container.appendChild(createBtn('«', 1, false, currentPage === 1));
+    container.appendChild(createBtn('‹', currentPage - 1, false, currentPage === 1));
+    
+    // Determine which page numbers to show
+    const pageWindow = 2; // number of pages to show before and after current
+    const pages = [];
+    
+    for (let i = 1; i <= totalPages; i++) {
+        if (i === 1 || i === totalPages || (i >= currentPage - pageWindow && i <= currentPage + pageWindow)) {
+            pages.push(i);
+        } else if (pages[pages.length - 1] !== '...') {
+            pages.push('...');
+        }
+    }
+    
+    pages.forEach(p => {
+        if (p === '...') {
+            const span = document.createElement('span');
+            span.textContent = '...';
+            span.style.color = 'var(--text-muted)';
+            span.style.padding = '0 6px';
+            container.appendChild(span);
+        } else {
+            container.appendChild(createBtn(p.toString(), p, p === currentPage));
+        }
+    });
+    
+    // Next page buttons
+    container.appendChild(createBtn('›', currentPage + 1, false, currentPage === totalPages));
+    container.appendChild(createBtn('»', totalPages, false, currentPage === totalPages));
 }
 
 // ─── Interactive Event Listeners ────────────────────────────────────────
@@ -818,7 +905,10 @@ function wireEvents() {
     document.getElementById('btnResetFilters').addEventListener('click', resetFilters);
     
     // Search Box Table Filter
-    document.getElementById('tableSearch').addEventListener('input', populateTable);
+    document.getElementById('tableSearch').addEventListener('input', () => {
+        currentTablePage = 1;
+        populateTable();
+    });
     
     // Data Import / Export Listeners
     document.getElementById('btnExportJson').addEventListener('click', exportToJson);
