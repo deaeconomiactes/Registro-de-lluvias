@@ -54,7 +54,7 @@ class DashboardHandler(http.server.SimpleHTTPRequestHandler):
 
 if __name__ == '__main__':
     port = 8081
-    server_address = ('', port)
-    httpd = http.server.HTTPServer(server_address, DashboardHandler)
-    print(f"Dashboard local server running on port {port}...")
+    server_address = ('127.0.0.1', port)
+    httpd = http.server.ThreadingHTTPServer(server_address, DashboardHandler)
+    print(f"Dashboard local server running at http://127.0.0.1:{port}/ ...")
     httpd.serve_forever()
