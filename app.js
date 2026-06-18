@@ -933,6 +933,7 @@ function wireEvents() {
     document.getElementById('btnImportData').addEventListener('click', triggerImport);
     document.getElementById('fileImport').addEventListener('change', handleFileImport);
     document.getElementById('btnSyncGoogleSheets').addEventListener('click', syncGoogleSheets);
+    document.getElementById('btnBackupGoogleSheets').addEventListener('click', configureGoogleSheetsBackup);
 }
 
 // ─── Form Submission Handling ───────────────────────────────────────────
@@ -982,6 +983,7 @@ function handleFormSubmit(e) {
                 lng: lngVal
             };
             saveRecordsToStorage();
+            backupRecordToGoogleSheets(records[index], 'update');
             showFloatingNotification('Registro actualizado con éxito.', 'success');
         }
         
@@ -1006,6 +1008,7 @@ function handleFormSubmit(e) {
         // Push & save
         records.push(newRecord);
         saveRecordsToStorage();
+        backupRecordToGoogleSheets(newRecord, 'create');
         showFloatingNotification('Medición registrada con éxito.', 'success');
     }
     
@@ -1042,8 +1045,12 @@ window.deleteRecord = async function(id) {
     });
     
     if (confirmDelete) {
+        const deletedRecord = records.find(r => r.id === id);
         records = records.filter(r => r.id !== id);
         saveRecordsToStorage();
+        if (deletedRecord) {
+            backupRecordToGoogleSheets(deletedRecord, 'delete');
+        }
         showFloatingNotification('Registro eliminado.', 'success');
         applyFilters();
     }
@@ -1642,6 +1649,79 @@ async function syncGoogleSheets() {
 }
 
 // ─── Custom Modal Dialog Helpers ─────────────────────────────────────────
+// Google Sheets Backup writes new dashboard changes through a Google Apps Script Web App.
+const GOOGLE_SHEETS_BACKUP_URL_KEY = 'corrientes_rain_google_sheets_backup_url';
+const GOOGLE_SHEETS_BACKUP_SHEET_URL = 'https://docs.google.com/spreadsheets/d/18KQKLhvhRgdBR3n-d3ZqcBGVV1HC_J1_XgoXuqLfPLI/edit?usp=sharing';
+const GOOGLE_SHEETS_DEFAULT_BACKUP_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbza7SAFaVnZwWFucE1GHjQs2HI7b9sybQpQyLJdCtY35SvIbBi4vBVFQZR8demaumTK/exec';
+
+function getGoogleSheetsBackupUrl() {
+    return GOOGLE_SHEETS_DEFAULT_BACKUP_WEB_APP_URL || localStorage.getItem(GOOGLE_SHEETS_BACKUP_URL_KEY) || '';
+}
+
+async function configureGoogleSheetsBackup() {
+    const savedUrl = getGoogleSheetsBackupUrl();
+    const isAutomaticBackup = Boolean(GOOGLE_SHEETS_DEFAULT_BACKUP_WEB_APP_URL);
+    const result = await showCustomPrompt({
+        title: 'Backup en Google Sheets',
+        bodyHtml: `
+            <p>Planilla vinculada:</p>
+            <p style="word-break: break-all; font-family: monospace; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 6px; font-size: 0.8rem;">${GOOGLE_SHEETS_BACKUP_SHEET_URL}</p>
+            <p style="margin-top: 10px;">${isAutomaticBackup ? 'El backup automatico esta configurado en el codigo del dashboard. No hace falta pegar nada en cada computadora.' : 'Pega la URL de la Web App de Google Apps Script. Desde ese momento, cada alta, edicion o borrado del dashboard se enviara a la planilla como backup.'}</p>
+        `,
+        placeholder: 'https://script.google.com/macros/s/.../exec',
+        defaultValue: savedUrl,
+        confirmText: isAutomaticBackup ? 'Guardar URL alternativa' : (savedUrl ? 'Actualizar Backup' : 'Activar Backup'),
+        cancelText: 'Cancelar',
+        showDelete: Boolean(savedUrl && !isAutomaticBackup),
+        deleteText: 'Desactivar Backup'
+    });
+
+    if (result.action === 'delete') {
+        localStorage.removeItem(GOOGLE_SHEETS_BACKUP_URL_KEY);
+        showFloatingNotification('Backup de Google Sheets desactivado.', 'info');
+        return;
+    }
+
+    if (result.action !== 'confirm') return;
+
+    const webAppUrl = result.value.trim();
+    if (!webAppUrl.startsWith('https://script.google.com/macros/s/') || !webAppUrl.endsWith('/exec')) {
+        showFloatingNotification('URL no valida. Debe ser la URL /exec de una Web App de Apps Script.', 'warning');
+        return;
+    }
+
+    localStorage.setItem(GOOGLE_SHEETS_BACKUP_URL_KEY, webAppUrl);
+    showFloatingNotification('Backup de Google Sheets activado.', 'success');
+}
+
+function backupRecordToGoogleSheets(record, action) {
+    const webAppUrl = getGoogleSheetsBackupUrl();
+    if (!webAppUrl || !record) return;
+
+    const payload = {
+        action,
+        record,
+        source: 'dashboard-registro-lluvias',
+        sentAt: new Date().toISOString()
+    };
+
+    fetch(webAppUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'text/plain;charset=utf-8'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(() => {
+        showFloatingNotification('Backup enviado a Google Sheets.', 'success');
+    })
+    .catch(err => {
+        console.warn('Google Sheets backup unavailable:', err);
+        showFloatingNotification('No se pudo enviar el backup a Google Sheets.', 'warning');
+    });
+}
+
 function showCustomPrompt({ title, bodyHtml, placeholder = '', defaultValue = '', confirmText = 'Aceptar', cancelText = 'Cancelar', showDelete = false, deleteText = 'Desvincular' }) {
     return new Promise((resolve) => {
         const modal = document.getElementById('customModal');
