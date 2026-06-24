@@ -932,8 +932,8 @@ function wireEvents() {
     document.getElementById('btnExportCsv').addEventListener('click', exportToCsv);
     document.getElementById('btnImportData').addEventListener('click', triggerImport);
     document.getElementById('fileImport').addEventListener('change', handleFileImport);
-    document.getElementById('btnSyncGoogleSheets').addEventListener('click', syncGoogleSheets);
-    document.getElementById('btnBackupGoogleSheets').addEventListener('click', configureGoogleSheetsBackup);
+    document.getElementById('btnSyncGoogleSheets')?.addEventListener('click', syncGoogleSheets);
+    document.getElementById('btnBackupGoogleSheets')?.addEventListener('click', configureGoogleSheetsBackup);
 }
 
 // ─── Form Submission Handling ───────────────────────────────────────────
