@@ -10,7 +10,8 @@ const HEADERS = [
   'lng',
   'action',
   'status',
-  'updatedAt'
+  'updatedAt',
+  'source'
 ];
 
 function doGet() {
@@ -112,7 +113,8 @@ function buildRow(record, action) {
     record.lng || '',
     action,
     status,
-    new Date().toISOString()
+    new Date().toISOString(),
+    record.source || ''
   ];
 }
 

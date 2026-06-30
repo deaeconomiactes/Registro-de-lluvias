@@ -920,6 +920,8 @@ function wireEvents() {
             setFormMarker(coords.lat, coords.lng);
         }
     });
+
+    document.getElementById('formSourceType').addEventListener('change', updateSourceDetailVisibility);
     
     // Submit Button in Form
     document.getElementById('btnSubmit').addEventListener('click', handleFormSubmit);
@@ -968,6 +970,47 @@ function wireEvents() {
 }
 
 // ─── Form Submission Handling ───────────────────────────────────────────
+function updateSourceDetailVisibility() {
+    const sourceType = document.getElementById('formSourceType').value;
+    const sourceDetailInput = document.getElementById('formSourceDetail');
+    const needsDetail = sourceType === 'Informante' || sourceType === 'Otra';
+
+    sourceDetailInput.style.display = needsDetail ? 'block' : 'none';
+    if (!needsDetail) {
+        sourceDetailInput.value = '';
+    }
+}
+
+function getFormSource() {
+    const sourceType = document.getElementById('formSourceType').value.trim();
+    const sourceDetail = document.getElementById('formSourceDetail').value.trim();
+
+    if (!sourceType) return '';
+    if (sourceType === 'Informante' || sourceType === 'Otra') {
+        return sourceDetail || sourceType;
+    }
+    return sourceType;
+}
+
+function setFormSource(source = '') {
+    const knownSources = ['', 'DRF', 'WEB INTA', 'SMN'];
+    const sourceType = document.getElementById('formSourceType');
+    const sourceDetail = document.getElementById('formSourceDetail');
+
+    if (knownSources.includes(source)) {
+        sourceType.value = source;
+        sourceDetail.value = '';
+    } else if (source) {
+        sourceType.value = 'Otra';
+        sourceDetail.value = source;
+    } else {
+        sourceType.value = '';
+        sourceDetail.value = '';
+    }
+
+    updateSourceDetailVisibility();
+}
+
 function handleFormSubmit(e) {
     e.preventDefault();
     
@@ -977,6 +1020,7 @@ function handleFormSubmit(e) {
     const dateVal = document.getElementById('formDate').value;
     const latVal = parseFloat(document.getElementById('formLat').value);
     const lngVal = parseFloat(document.getElementById('formLng').value);
+    const sourceVal = getFormSource();
     
     // Validations
     if (!departamento) {
@@ -1011,7 +1055,8 @@ function handleFormSubmit(e) {
                 municipality: municipio,
                 rain: rainVal,
                 lat: latVal,
-                lng: lngVal
+                lng: lngVal,
+                source: sourceVal
             };
             saveRecordsToStorage();
             backupRecordToGoogleSheets(records[index], 'update');
@@ -1033,7 +1078,8 @@ function handleFormSubmit(e) {
             municipality: municipio,
             rain: rainVal,
             lat: latVal,
-            lng: lngVal
+            lng: lngVal,
+            source: sourceVal
         };
         
         // Push & save
@@ -1045,6 +1091,7 @@ function handleFormSubmit(e) {
     
     // Reset form fields but keep the date for speed entry
     document.getElementById('formRain').value = '';
+    setFormSource('');
     
     // Clear the form marker
     if (formMarker) {
@@ -1182,6 +1229,7 @@ window.editRecord = function(id) {
     
     document.getElementById('formRain').value = rec.rain;
     document.getElementById('formDate').value = rec.date;
+    setFormSource(rec.source || '');
     
     // Center and zoom map on the record coords
     formMapInstance.setView([rec.lat, rec.lng], 13);
@@ -1204,6 +1252,7 @@ function cancelEdit() {
     
     // Clear fields
     document.getElementById('formRain').value = '';
+    setFormSource('');
     const today = new Date().toISOString().split('T')[0];
     document.getElementById('formDate').value = today;
     document.getElementById('formDepartamento').value = '';
