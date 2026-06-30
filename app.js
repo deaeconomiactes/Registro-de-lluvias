@@ -4,6 +4,7 @@
 
 // ─── Constants & Configuration ──────────────────────────────────────────
 const LOCAL_STORAGE_KEY = 'corrientes_rain_records';
+const MIN_RAIN_RECORD_MM = 0.99;
 
 // Department and Municipality Coordinates in Corrientes
 const DEPARTMENTS_DATA = {
@@ -284,6 +285,7 @@ async function loadRecords() {
         }
         
         migrateRecords();
+        removeInsignificantRainRecords();
         await mergeCsvRecordsIntoStorage();
     } else {
         try {
@@ -304,6 +306,7 @@ async function loadRecords() {
             records = [...MOCK_DATA];
         }
         migrateRecords();
+        removeInsignificantRainRecords();
         saveRecordsToStorage();
     }
 }
@@ -331,6 +334,7 @@ async function mergeCsvRecordsIntoStorage() {
 
         if (added > 0) {
             migrateRecords();
+            removeInsignificantRainRecords();
             saveRecordsToStorage();
         }
     } catch (e) {
@@ -1031,8 +1035,8 @@ function handleFormSubmit(e) {
         showFloatingNotification('Por favor, selecciona un municipio.', 'warning');
         return;
     }
-    if (isNaN(rainVal) || rainVal < 0) {
-        showFloatingNotification('Ingresa una cantidad de lluvia válida.', 'warning');
+    if (!isSignificantRain(rainVal)) {
+        showFloatingNotification(`Ingresa una cantidad de lluvia mayor o igual a ${MIN_RAIN_RECORD_MM} mm.`, 'warning');
         return;
     }
     if (!dateVal) {
@@ -1352,7 +1356,7 @@ function handleFileImport(e) {
             
             // Validate and convert imported fields
             const validRecords = importedRecords.filter(r => {
-                return r.date && r.municipality && !isNaN(parseFloat(r.rain)) && !isNaN(parseFloat(r.lat)) && !isNaN(parseFloat(r.lng));
+                return r.date && r.municipality && isSignificantRain(r.rain) && !isNaN(parseFloat(r.lat)) && !isNaN(parseFloat(r.lng));
             }).map(r => {
                 // If department is missing, we migrate it based on the dictionary
                 let dept = r.department || r.departamento;
@@ -1369,7 +1373,7 @@ function handleFileImport(e) {
                     date: r.date.trim(),
                     department: (dept || 'Capital').trim(),
                     municipality: r.municipality.trim(),
-                    rain: Math.max(0, parseFloat(r.rain)),
+                    rain: parseFloat(r.rain),
                     lat: parseFloat(r.lat),
                     lng: parseFloat(r.lng)
                 };
@@ -1448,7 +1452,7 @@ function parseCsvContent(csvText) {
         const latVal = colIdx.lat !== -1 ? row[colIdx.lat] : row[4];
         const lngVal = colIdx.lng !== -1 ? row[colIdx.lng] : row[5];
         
-        if (dateVal && munVal && rainVal) {
+        if (dateVal && munVal && isSignificantRain(rainVal)) {
             results.push({
                 id: idVal,
                 date: dateVal.trim(),
@@ -1501,6 +1505,19 @@ function migrateRecords() {
         }
     });
     if (migrated) {
+        saveRecordsToStorage();
+    }
+}
+
+function isSignificantRain(value) {
+    const rain = parseFloat(value);
+    return !isNaN(rain) && rain >= MIN_RAIN_RECORD_MM;
+}
+
+function removeInsignificantRainRecords() {
+    const before = records.length;
+    records = records.filter(r => isSignificantRain(r.rain));
+    if (records.length !== before) {
         saveRecordsToStorage();
     }
 }
@@ -1668,7 +1685,7 @@ async function syncGoogleSheets() {
         }
         
         const validRecords = importedRecords.filter(r => {
-            return r.date && r.municipality && !isNaN(parseFloat(r.rain)) && !isNaN(parseFloat(r.lat)) && !isNaN(parseFloat(r.lng));
+            return r.date && r.municipality && isSignificantRain(r.rain) && !isNaN(parseFloat(r.lat)) && !isNaN(parseFloat(r.lng));
         }).map(r => {
             let dept = r.department;
             if (!dept) {
@@ -1684,7 +1701,7 @@ async function syncGoogleSheets() {
                 date: r.date.trim(),
                 department: (dept || 'Capital').trim(),
                 municipality: r.municipality.trim(),
-                rain: Math.max(0, parseFloat(r.rain)),
+                rain: parseFloat(r.rain),
                 lat: parseFloat(r.lat),
                 lng: parseFloat(r.lng)
             };

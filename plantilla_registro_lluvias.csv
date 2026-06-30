@@ -24,11 +24,6 @@ id,date,department,municipality,rain,lat,lng
 23,2023-01-01,San Roque,San Roque,5.5,-28.5744,-58.7089
 24,2023-01-01,Santo Tomé,Santo Tomé,11,-28.5492,-56.0428
 25,2023-01-01,Sauce,Sauce,7,-30.0736,-58.7731
-26,2023-01-02,Ituzaingó,Ituzaingó,0.65,-27.5808,-56.6853
-27,2023-01-02,Santo Tomé,Santo Tomé,0.1,-28.5492,-56.0428
-28,2023-01-03,Ituzaingó,Ituzaingó,0.15,-27.5808,-56.6853
-29,2023-01-10,General Alvear,Alvear,0.2,-29.095,-56.5433
-30,2023-01-10,San Martín,La Cruz,0.2,-29.1744,-56.6433
 31,2023-01-11,Concepción,Concepción,6.4,-28.3917,-57.8867
 32,2023-01-11,Curuzú Cuatiá,Curuzú Cuatiá,5.5,-29.7917,-58.0561
 33,2023-01-11,General Alvear,Alvear,10,-29.095,-56.5433
@@ -60,7 +55,6 @@ id,date,department,municipality,rain,lat,lng
 59,2023-01-12,Santo Tomé,Santo Tomé,15.5,-28.5492,-56.0428
 60,2023-01-12,Sauce,Sauce,1.5,-30.0736,-58.7731
 61,2023-01-13,Ituzaingó,Ituzaingó,2.9333333333333336,-27.5808,-56.6853
-62,2023-01-13,San Luis del Palmar,San Luis del Palmar,0.2,-27.5069,-58.5544
 63,2023-01-18,Empedrado,Empedrado,4.5,-27.9014,-58.8058
 64,2023-01-19,Capital,Capital (Corrientes),1.4,-27.4692,-58.8306
 65,2023-01-19,Concepción,Concepción,1.5,-28.3917,-57.8867
@@ -70,7 +64,6 @@ id,date,department,municipality,rain,lat,lng
 69,2023-01-19,San Roque,San Roque,1.4,-28.5744,-58.7089
 70,2023-01-19,Santo Tomé,Santo Tomé,2,-28.5492,-56.0428
 71,2023-01-19,Sauce,Sauce,12,-30.0736,-58.7731
-72,2023-01-20,Santo Tomé,Santo Tomé,0.6,-28.5492,-56.0428
 73,2023-01-21,Bella Vista,Bella Vista,45,-28.5083,-59.0436
 74,2023-01-21,Concepción,Concepción,8.6,-28.3917,-57.8867
 75,2023-01-21,Curuzú Cuatiá,Curuzú Cuatiá,8.5,-29.7917,-58.0561
@@ -115,23 +108,17 @@ id,date,department,municipality,rain,lat,lng
 114,2023-01-26,San Miguel,San Miguel,27.4,-27.9861,-57.5894
 115,2023-01-26,San Roque,San Roque,6.4,-28.5744,-58.7089
 116,2023-01-26,Santo Tomé,Santo Tomé,3.6,-28.5492,-56.0428
-117,2023-01-27,General Alvear,Alvear,0.2,-29.095,-56.5433
-118,2023-01-27,Itatí,Itatí,0.2,-27.2678,-58.2458
-119,2023-01-27,San Martín,La Cruz,0.2,-29.1744,-56.6433
-120,2023-01-27,Santo Tomé,Santo Tomé,0.4,-28.5492,-56.0428
 121,2023-01-28,Monte Caseros,Mocoretá,6.6,-30.6183,-57.9708
 122,2023-01-28,Santo Tomé,Santo Tomé,9.2,-28.5492,-56.0428
 123,2023-01-30,Capital,Capital (Corrientes),10,-27.4692,-58.8306
 124,2023-01-30,Itatí,Itatí,5,-27.2678,-58.2458
 125,2023-01-30,San Luis del Palmar,San Luis del Palmar,7.6,-27.5069,-58.5544
-126,2023-01-31,San Luis del Palmar,San Luis del Palmar,0.2,-27.5069,-58.5544
 127,2023-02-02,Berón de Astrada,Berón de Astrada,2,-27.3056,-57.5344
 128,2023-02-02,Curuzú Cuatiá,Curuzú Cuatiá,65,-29.7917,-58.0561
 129,2023-02-02,General Alvear,Alvear,39.4,-29.095,-56.5433
 130,2023-02-02,General Paz,Caá Catí,31.6,-27.7511,-57.6208
 131,2023-02-02,Monte Caseros,Mocoretá,7.8,-30.6183,-57.9708
 132,2023-02-02,Paso de los Libres,Paso de los Libres,27,-29.7122,-57.0869
-133,2023-02-02,San Cosme,San Cosme,0.7,-27.3711,-58.5117
 134,2023-02-02,San Martín,La Cruz,58.7,-29.1744,-56.6433
 135,2023-02-02,San Miguel,San Miguel,3.4,-27.9861,-57.5894
 136,2023-02-02,Santo Tomé,Santo Tomé,2.2,-28.5492,-56.0428
@@ -150,7 +137,6 @@ id,date,department,municipality,rain,lat,lng
 149,2023-02-08,San Martín,La Cruz,5.8,-29.1744,-56.6433
 150,2023-02-08,San Miguel,San Miguel,1.4,-27.9861,-57.5894
 151,2023-02-08,San Roque,San Roque,12,-28.5744,-58.7089
-152,2023-02-08,Santo Tomé,Santo Tomé,0.4,-28.5492,-56.0428
 153,2023-02-09,Bella Vista,Bella Vista,1.35,-28.5083,-59.0436
 154,2023-02-09,Capital,Capital (Corrientes),14,-27.4692,-58.8306
 155,2023-02-09,Concepción,Concepción,4.8,-28.3917,-57.8867
@@ -159,7 +145,6 @@ id,date,department,municipality,rain,lat,lng
 158,2023-02-09,Esquina,Esquina,10,-30.0139,-59.5267
 159,2023-02-09,General Paz,Caá Catí,7.199999999999999,-27.7511,-57.6208
 160,2023-02-09,Itatí,Itatí,1,-27.2678,-58.2458
-161,2023-02-09,Lavalle,Lavalle,0.2,-29.0233,-59.1833
 162,2023-02-09,Mburucuyá,Mburucuyá,70,-28.0478,-58.2283
 163,2023-02-09,Mercedes,Mercedes,18.25,-29.1842,-58.0753
 164,2023-02-09,Monte Caseros,Mocoretá,2.5,-30.6183,-57.9708
@@ -168,8 +153,6 @@ id,date,department,municipality,rain,lat,lng
 167,2023-02-09,San Luis del Palmar,San Luis del Palmar,33,-27.5069,-58.5544
 168,2023-02-09,San Miguel,San Miguel,5.4,-27.9861,-57.5894
 169,2023-02-09,San Roque,San Roque,11,-28.5744,-58.7089
-170,2023-02-10,San Luis del Palmar,San Luis del Palmar,0.2,-27.5069,-58.5544
-171,2023-02-10,Santo Tomé,Santo Tomé,0.4,-28.5492,-56.0428
 172,2023-02-13,Itatí,Itatí,3.2,-27.2678,-58.2458
 173,2023-02-14,Bella Vista,Bella Vista,1.2,-28.5083,-59.0436
 174,2023-02-14,Capital,Capital (Corrientes),6,-27.4692,-58.8306
@@ -191,7 +174,6 @@ id,date,department,municipality,rain,lat,lng
 190,2023-02-16,Esquina,Esquina,13.55,-30.0139,-59.5267
 191,2023-02-16,General Alvear,Alvear,4.6,-29.095,-56.5433
 192,2023-02-16,Goya,Goya,14.666666666666666,-29.1442,-59.2635
-193,2023-02-16,Itatí,Itatí,0.4,-27.2678,-58.2458
 194,2023-02-16,Ituzaingó,Ituzaingó,12.833333333333334,-27.5808,-56.6853
 195,2023-02-16,Lavalle,Lavalle,22.8,-29.0233,-59.1833
 196,2023-02-16,Mburucuyá,Mburucuyá,3,-28.0478,-58.2283
@@ -206,10 +188,6 @@ id,date,department,municipality,rain,lat,lng
 205,2023-02-16,San Roque,San Roque,8.8,-28.5744,-58.7089
 206,2023-02-16,Santo Tomé,Santo Tomé,8.2,-28.5492,-56.0428
 207,2023-02-16,Sauce,Sauce,12,-30.0736,-58.7731
-208,2023-02-17,General Alvear,Alvear,0.2,-29.095,-56.5433
-209,2023-02-17,Ituzaingó,Ituzaingó,0.5,-27.5808,-56.6853
-210,2023-02-17,San Martín,La Cruz,0.2,-29.1744,-56.6433
-211,2023-02-17,Santo Tomé,Santo Tomé,0.2,-28.5492,-56.0428
 212,2023-02-23,Capital,Capital (Corrientes),28.6,-27.4692,-58.8306
 213,2023-02-23,Concepción,Concepción,2,-28.3917,-57.8867
 214,2023-02-23,Empedrado,Empedrado,50,-27.9014,-58.8058
@@ -248,10 +226,8 @@ id,date,department,municipality,rain,lat,lng
 247,2023-02-27,San Martín,La Cruz,12.6,-29.1744,-56.6433
 248,2023-03-01,Capital,Capital (Corrientes),15.4,-27.4692,-58.8306
 249,2023-03-01,Concepción,Concepción,14.2,-28.3917,-57.8867
-250,2023-03-01,Curuzú Cuatiá,Curuzú Cuatiá,0.3,-29.7917,-58.0561
 251,2023-03-01,Empedrado,Empedrado,29.4,-27.9014,-58.8058
 252,2023-03-01,Esquina,Esquina,3.8,-30.0139,-59.5267
-253,2023-03-01,General Alvear,Alvear,0.8,-29.095,-56.5433
 254,2023-03-01,General Paz,Caá Catí,7.8,-27.7511,-57.6208
 255,2023-03-01,Goya,Goya,7.8,-29.1442,-59.2635
 256,2023-03-01,Itatí,Itatí,11.4,-27.2678,-58.2458
@@ -261,13 +237,11 @@ id,date,department,municipality,rain,lat,lng
 260,2023-03-01,Mercedes,Mercedes,9,-29.1842,-58.0753
 261,2023-03-01,Saladas,Saladas,14,-28.2536,-58.6256
 262,2023-03-01,San Luis del Palmar,San Luis del Palmar,8.8,-27.5069,-58.5544
-263,2023-03-01,San Martín,La Cruz,0.8,-29.1744,-56.6433
 264,2023-03-01,San Miguel,San Miguel,30.8,-27.9861,-57.5894
 265,2023-03-01,San Roque,San Roque,25.9,-28.5744,-58.7089
 266,2023-03-01,Santo Tomé,Santo Tomé,8.2,-28.5492,-56.0428
 267,2023-03-02,Bella Vista,Bella Vista,33.1,-28.5083,-59.0436
 268,2023-03-02,Capital,Capital (Corrientes),12,-27.4692,-58.8306
-269,2023-03-02,Concepción,Concepción,0.4,-28.3917,-57.8867
 270,2023-03-02,Curuzú Cuatiá,Curuzú Cuatiá,1,-29.7917,-58.0561
 271,2023-03-02,Empedrado,Empedrado,61.8,-27.9014,-58.8058
 272,2023-03-02,Esquina,Esquina,44,-30.0139,-59.5267
@@ -309,21 +283,8 @@ id,date,department,municipality,rain,lat,lng
 308,2023-03-03,San Roque,San Roque,20.2,-28.5744,-58.7089
 309,2023-03-03,Santo Tomé,Santo Tomé,10.4,-28.5492,-56.0428
 310,2023-03-03,Sauce,Sauce,70,-30.0736,-58.7731
-311,2023-03-04,Capital,Capital (Corrientes),0.2,-27.4692,-58.8306
-312,2023-03-04,General Alvear,Alvear,0.2,-29.095,-56.5433
-313,2023-03-04,General Paz,Caá Catí,0.2,-27.7511,-57.6208
-314,2023-03-04,Monte Caseros,Mocoretá,0.2,-30.6183,-57.9708
 315,2023-03-04,Paso de los Libres,Paso de los Libres,16.4,-29.7122,-57.0869
-316,2023-03-04,San Martín,La Cruz,0.2,-29.1744,-56.6433
-317,2023-03-04,San Miguel,San Miguel,0.2,-27.9861,-57.5894
 318,2023-03-04,Santo Tomé,Santo Tomé,4,-28.5492,-56.0428
-319,2023-03-05,Capital,Capital (Corrientes),0.2,-27.4692,-58.8306
-320,2023-03-05,Concepción,Concepción,0.2,-28.3917,-57.8867
-321,2023-03-05,Santo Tomé,Santo Tomé,0.2,-28.5492,-56.0428
-322,2023-03-06,Concepción,Concepción,0.2,-28.3917,-57.8867
-323,2023-03-06,San Miguel,San Miguel,0.4,-27.9861,-57.5894
-324,2023-03-09,Santo Tomé,Santo Tomé,0.3,-28.5492,-56.0428
-325,2023-03-13,Santo Tomé,Santo Tomé,0.7,-28.5492,-56.0428
 326,2023-03-14,Monte Caseros,Mocoretá,17,-30.6183,-57.9708
 327,2023-03-15,Bella Vista,Bella Vista,5.1,-28.5083,-59.0436
 328,2023-03-15,Capital,Capital (Corrientes),12,-27.4692,-58.8306
@@ -342,7 +303,6 @@ id,date,department,municipality,rain,lat,lng
 341,2023-03-15,San Martín,La Cruz,22.6,-29.1744,-56.6433
 342,2023-03-15,San Miguel,San Miguel,12,-27.9861,-57.5894
 343,2023-03-15,San Roque,San Roque,77.5,-28.5744,-58.7089
-344,2023-03-15,Santo Tomé,Santo Tomé,0.2,-28.5492,-56.0428
 345,2023-03-15,Sauce,Sauce,21.5,-30.0736,-58.7731
 346,2023-03-16,Bella Vista,Bella Vista,30,-28.5083,-59.0436
 347,2023-03-16,Concepción,Concepción,8,-28.3917,-57.8867
@@ -351,7 +311,6 @@ id,date,department,municipality,rain,lat,lng
 350,2023-03-16,Esquina,Esquina,15,-30.0139,-59.5267
 351,2023-03-16,General Alvear,Alvear,5.4,-29.095,-56.5433
 352,2023-03-16,Goya,Goya,90,-29.1442,-59.2635
-353,2023-03-16,Itatí,Itatí,0.8,-27.2678,-58.2458
 354,2023-03-16,Ituzaingó,Ituzaingó,11,-27.5808,-56.6853
 355,2023-03-16,Lavalle,Lavalle,1.8,-29.0233,-59.1833
 356,2023-03-16,Mburucuyá,Mburucuyá,7,-28.0478,-58.2283
@@ -359,7 +318,6 @@ id,date,department,municipality,rain,lat,lng
 358,2023-03-16,Monte Caseros,Monte Caseros,4,-30.2526,-57.6369
 359,2023-03-16,Saladas,Saladas,10,-28.2536,-58.6256
 360,2023-03-16,San Cosme,San Cosme,5.6,-27.3711,-58.5117
-361,2023-03-16,San Luis del Palmar,San Luis del Palmar,0.2,-27.5069,-58.5544
 362,2023-03-16,San Martín,La Cruz,5.4,-29.1744,-56.6433
 363,2023-03-16,Santo Tomé,Santo Tomé,2.4,-28.5492,-56.0428
 364,2023-03-16,Sauce,Sauce,17,-30.0736,-58.7731
@@ -367,21 +325,17 @@ id,date,department,municipality,rain,lat,lng
 366,2023-03-17,Concepción,Concepción,16.4,-28.3917,-57.8867
 367,2023-03-17,Curuzú Cuatiá,Curuzú Cuatiá,2.9,-29.7917,-58.0561
 368,2023-03-17,Empedrado,Empedrado,31.1,-27.9014,-58.8058
-369,2023-03-17,General Alvear,Alvear,0.2,-29.095,-56.5433
 370,2023-03-17,Itatí,Itatí,1.8,-27.2678,-58.2458
-371,2023-03-17,Lavalle,Lavalle,0.2,-29.0233,-59.1833
 372,2023-03-17,Mburucuyá,Mburucuyá,20,-28.0478,-58.2283
 373,2023-03-17,Monte Caseros,Mocoretá,44,-30.6183,-57.9708
 374,2023-03-17,Paso de los Libres,Paso de los Libres,3.1,-29.7122,-57.0869
 375,2023-03-17,Saladas,Saladas,50,-28.2536,-58.6256
 376,2023-03-17,San Cosme,San Cosme,26,-27.3711,-58.5117
 377,2023-03-17,San Luis del Palmar,San Luis del Palmar,3.8,-27.5069,-58.5544
-378,2023-03-17,San Martín,La Cruz,0.2,-29.1744,-56.6433
 379,2023-03-17,San Miguel,San Miguel,3,-27.9861,-57.5894
 380,2023-03-17,San Roque,San Roque,21,-28.5744,-58.7089
 381,2023-03-17,Santo Tomé,Santo Tomé,2.3,-28.5492,-56.0428
 382,2023-03-18,Bella Vista,Bella Vista,5.6,-28.5083,-59.0436
-383,2023-03-18,Empedrado,Empedrado,0.2,-27.9014,-58.8058
 384,2023-03-18,General Alvear,Alvear,52.2,-29.095,-56.5433
 385,2023-03-18,Itatí,Itatí,1.6,-27.2678,-58.2458
 386,2023-03-18,Paso de los Libres,Paso de los Libres,1.5,-29.7122,-57.0869
@@ -393,14 +347,11 @@ id,date,department,municipality,rain,lat,lng
 392,2023-03-19,General Alvear,Alvear,5,-29.095,-56.5433
 393,2023-03-19,San Luis del Palmar,San Luis del Palmar,7,-27.5069,-58.5544
 394,2023-03-19,San Martín,La Cruz,5,-29.1744,-56.6433
-395,2023-03-20,Itatí,Itatí,0.8,-27.2678,-58.2458
-396,2023-03-20,Monte Caseros,Mocoretá,0.2,-30.6183,-57.9708
 397,2023-03-20,Santo Tomé,Santo Tomé,4,-28.5492,-56.0428
 398,2023-03-21,General Alvear,Alvear,4.6,-29.095,-56.5433
 399,2023-03-21,Monte Caseros,Mocoretá,2.5,-30.6183,-57.9708
 400,2023-03-21,San Martín,La Cruz,4.6,-29.1744,-56.6433
 401,2023-03-21,Santo Tomé,Santo Tomé,1.4,-28.5492,-56.0428
-402,2023-03-22,Concepción,Concepción,0.2,-28.3917,-57.8867
 403,2023-03-22,Curuzú Cuatiá,Curuzú Cuatiá,7,-29.7917,-58.0561
 404,2023-03-22,Esquina,Esquina,1.8,-30.0139,-59.5267
 405,2023-03-22,Monte Caseros,Mocoretá,3.2,-30.6183,-57.9708
@@ -409,7 +360,6 @@ id,date,department,municipality,rain,lat,lng
 408,2023-03-23,Curuzú Cuatiá,Curuzú Cuatiá,6,-29.7917,-58.0561
 409,2023-03-23,General Alvear,Alvear,5.4,-29.095,-56.5433
 410,2023-03-23,Goya,Goya,1.2,-29.1442,-59.2635
-411,2023-03-23,Itatí,Itatí,0.2,-27.2678,-58.2458
 412,2023-03-23,Ituzaingó,Ituzaingó,12,-27.5808,-56.6853
 413,2023-03-23,Lavalle,Lavalle,1.2,-29.0233,-59.1833
 414,2023-03-23,Paso de los Libres,Paso de los Libres,6.5,-29.7122,-57.0869
@@ -439,27 +389,20 @@ id,date,department,municipality,rain,lat,lng
 438,2023-03-24,Santo Tomé,Santo Tomé,52.95,-28.5492,-56.0428
 439,2023-03-24,Sauce,Sauce,9,-30.0736,-58.7731
 440,2023-03-25,Bella Vista,Bella Vista,2.2,-28.5083,-59.0436
-441,2023-03-25,Capital,Capital (Corrientes),0.2,-27.4692,-58.8306
 442,2023-03-25,Concepción,Concepción,14.2,-28.3917,-57.8867
 443,2023-03-25,Curuzú Cuatiá,Curuzú Cuatiá,10.1,-29.7917,-58.0561
 444,2023-03-25,Empedrado,Empedrado,4.4,-27.9014,-58.8058
 445,2023-03-25,General Alvear,Alvear,4.6,-29.095,-56.5433
 446,2023-03-25,General Paz,Caá Catí,56,-27.7511,-57.6208
 447,2023-03-25,Goya,Goya,1,-29.1442,-59.2635
-448,2023-03-25,Itatí,Itatí,0.2,-27.2678,-58.2458
 449,2023-03-25,Ituzaingó,Ituzaingó,2.3,-27.5808,-56.6853
 450,2023-03-25,Lavalle,Lavalle,1.2,-29.0233,-59.1833
-451,2023-03-25,Monte Caseros,Mocoretá,0.4,-30.6183,-57.9708
 452,2023-03-25,Monte Caseros,Monte Caseros,24,-30.2526,-57.6369
 453,2023-03-25,San Cosme,San Cosme,32,-27.3711,-58.5117
-454,2023-03-25,San Luis del Palmar,San Luis del Palmar,0.8,-27.5069,-58.5544
 455,2023-03-25,San Martín,La Cruz,4.6,-29.1744,-56.6433
 456,2023-03-25,San Miguel,San Miguel,2,-27.9861,-57.5894
 457,2023-03-25,San Roque,San Roque,7,-28.5744,-58.7089
 458,2023-03-25,Santo Tomé,Santo Tomé,2.3000000000000003,-28.5492,-56.0428
-459,2023-03-26,Concepción,Concepción,0.4,-28.3917,-57.8867
-460,2023-03-26,General Alvear,Alvear,0.2,-29.095,-56.5433
-461,2023-03-26,San Martín,La Cruz,0.2,-29.1744,-56.6433
 462,2023-03-29,Bella Vista,Bella Vista,4,-28.5083,-59.0436
 463,2023-03-30,Berón de Astrada,Berón de Astrada,26,-27.3056,-57.5344
 464,2023-03-30,Capital,Capital (Corrientes),46.4,-27.4692,-58.8306
@@ -544,8 +487,6 @@ id,date,department,municipality,rain,lat,lng
 543,2023-04-13,San Miguel,San Miguel,19,-27.9861,-57.5894
 544,2023-04-24,General Alvear,Alvear,12.8,-29.095,-56.5433
 545,2023-04-24,San Martín,La Cruz,12.8,-29.1744,-56.6433
-546,2023-04-25,General Alvear,Alvear,0.4,-29.095,-56.5433
-547,2023-04-25,San Martín,La Cruz,0.4,-29.1744,-56.6433
 548,2023-04-25,San Miguel,San Miguel,15,-27.9861,-57.5894
 549,2023-05-01,Bella Vista,Bella Vista,5,-28.5083,-59.0436
 550,2023-05-01,Capital,Capital (Corrientes),59.5,-27.4692,-58.8306
@@ -647,7 +588,6 @@ id,date,department,municipality,rain,lat,lng
 646,2023-05-06,General Alvear,Alvear,5,-29.095,-56.5433
 647,2023-05-06,General Paz,Caá Catí,20,-27.7511,-57.6208
 648,2023-05-06,Ituzaingó,Ituzaingó,19,-27.5808,-56.6853
-649,2023-05-06,Lavalle,Lavalle,0.6,-29.0233,-59.1833
 650,2023-05-06,Mburucuyá,Mburucuyá,20.5,-28.0478,-58.2283
 651,2023-05-06,Mercedes,Mercedes,37,-29.1842,-58.0753
 652,2023-05-06,Monte Caseros,Monte Caseros,20,-30.2526,-57.6369
@@ -666,7 +606,6 @@ id,date,department,municipality,rain,lat,lng
 665,2023-05-07,Esquina,Esquina,1,-30.0139,-59.5267
 666,2023-05-07,General Paz,Caá Catí,22,-27.7511,-57.6208
 667,2023-05-07,Ituzaingó,Ituzaingó,13,-27.5808,-56.6853
-668,2023-05-07,Lavalle,Lavalle,0.6,-29.0233,-59.1833
 669,2023-05-07,Mburucuyá,Mburucuyá,29,-28.0478,-58.2283
 670,2023-05-07,Mercedes,Mercedes,9,-29.1842,-58.0753
 671,2023-05-07,Monte Caseros,Monte Caseros,1,-30.2526,-57.6369
@@ -759,19 +698,13 @@ id,date,department,municipality,rain,lat,lng
 758,2023-06-10,Paso de los Libres,Paso de los Libres,6,-29.7122,-57.0869
 759,2023-06-10,San Miguel,San Miguel,5,-27.9861,-57.5894
 760,2023-06-10,Santo Tomé,Santo Tomé,24,-28.5492,-56.0428
-761,2023-06-14,Concepción,Concepción,0.8,-28.3917,-57.8867
 762,2023-06-14,General Alvear,Alvear,8.2,-29.095,-56.5433
 763,2023-06-14,San Martín,La Cruz,8.2,-29.1744,-56.6433
-764,2023-06-15,Concepción,Concepción,0.6,-28.3917,-57.8867
-765,2023-06-15,Curuzú Cuatiá,Curuzú Cuatiá,0.8,-29.7917,-58.0561
 766,2023-06-15,General Alvear,Alvear,1.2,-29.095,-56.5433
 767,2023-06-15,San Martín,La Cruz,1.2,-29.1744,-56.6433
 768,2023-06-15,San Miguel,San Miguel,1,-27.9861,-57.5894
 769,2023-06-15,Santo Tomé,Santo Tomé,7.8,-28.5492,-56.0428
-770,2023-06-16,Concepción,Concepción,0.4,-28.3917,-57.8867
-771,2023-06-16,General Alvear,Alvear,0.4,-29.095,-56.5433
 772,2023-06-16,Ituzaingó,Ituzaingó,3,-27.5808,-56.6853
-773,2023-06-16,San Martín,La Cruz,0.4,-29.1744,-56.6433
 774,2023-06-19,General Alvear,Alvear,1.2,-29.095,-56.5433
 775,2023-06-19,San Martín,La Cruz,1.2,-29.1744,-56.6433
 776,2023-06-20,Concepción,Concepción,5.4,-28.3917,-57.8867
@@ -893,9 +826,7 @@ id,date,department,municipality,rain,lat,lng
 892,2023-07-25,Monte Caseros,Monte Caseros,3,-30.2526,-57.6369
 893,2023-07-25,Paso de los Libres,Paso de los Libres,1,-29.7122,-57.0869
 894,2023-07-25,San Roque,San Roque,7.5,-28.5744,-58.7089
-895,2023-07-27,Capital,Capital (Corrientes),0.4,-27.4692,-58.8306
 896,2023-07-27,San Martín,La Cruz,1.2,-29.1744,-56.6433
-897,2023-07-30,Capital,Capital (Corrientes),0.2,-27.4692,-58.8306
 898,2023-08-08,Bella Vista,Bella Vista,20,-28.5083,-59.0436
 899,2023-08-08,Berón de Astrada,Berón de Astrada,92,-27.3056,-57.5344
 900,2023-08-08,Capital,Capital (Corrientes),2.6,-27.4692,-58.8306
@@ -2273,7 +2204,6 @@ id,date,department,municipality,rain,lat,lng
 2272,2024-04-24,Monte Caseros,Monte Caseros,4,-30.2526,-57.6369
 2273,2024-04-24,San Luis del Palmar,San Luis del Palmar,1,-27.5069,-58.5544
 2274,2024-04-24,San Miguel,San Miguel,1,-27.9861,-57.5894
-2275,2024-04-24,Santo Tomé,Santo Tomé,0.9,-28.5492,-56.0428
 2276,2024-04-25,Berón de Astrada,Berón de Astrada,3,-27.3056,-57.5344
 2277,2024-04-25,Capital,Capital (Corrientes),19,-27.4692,-58.8306
 2278,2024-04-25,Curuzú Cuatiá,Curuzú Cuatiá,30,-29.7917,-58.0561
@@ -2838,7 +2768,6 @@ id,date,department,municipality,rain,lat,lng
 2837,2024-10-14,Mburucuyá,Mburucuyá,7,-28.0478,-58.2283
 2838,2024-10-14,Mercedes,Mercedes,17.5,-29.1842,-58.0753
 2839,2024-10-14,Saladas,Saladas,4,-28.2536,-58.6256
-2840,2024-10-14,Santo Tomé,Santo Tomé,0.8,-28.5492,-56.0428
 2841,2024-10-14,Sauce,Sauce,43,-30.0736,-58.7731
 2842,2024-10-15,Bella Vista,Bella Vista,39.75,-28.5083,-59.0436
 2843,2024-10-15,Berón de Astrada,Berón de Astrada,35,-27.3056,-57.5344
@@ -3400,7 +3329,6 @@ id,date,department,municipality,rain,lat,lng
 3399,2025-02-27,San Martín,La Cruz,11.8,-29.1744,-56.6433
 3400,2025-02-27,San Roque,San Roque,20,-28.5744,-58.7089
 3401,2025-02-27,Santo Tomé,Santo Tomé,21.1,-28.5492,-56.0428
-3402,2025-02-28,Esquina,Esquina,0.5,-30.0139,-59.5267
 3403,2025-02-28,General Alvear,Alvear,2,-29.095,-56.5433
 3404,2025-02-28,Ituzaingó,Ituzaingó,5,-27.5808,-56.6853
 3405,2025-02-28,San Martín,La Cruz,2,-29.1744,-56.6433
