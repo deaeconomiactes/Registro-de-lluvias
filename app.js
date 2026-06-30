@@ -284,6 +284,7 @@ async function loadRecords() {
         }
         
         migrateRecords();
+        await mergeCsvRecordsIntoStorage();
     } else {
         try {
             const response = await fetch('plantilla_registro_lluvias.csv');
@@ -304,6 +305,36 @@ async function loadRecords() {
         }
         migrateRecords();
         saveRecordsToStorage();
+    }
+}
+
+async function mergeCsvRecordsIntoStorage() {
+    try {
+        const response = await fetch('plantilla_registro_lluvias.csv');
+        if (!response.ok) return;
+
+        const csvText = await response.text();
+        const csvRecords = parseCsvContent(csvText);
+        if (!Array.isArray(csvRecords) || csvRecords.length === 0) return;
+
+        const existingKeys = new Set(records.map(r => `${r.date}|${r.municipality}`));
+        let added = 0;
+
+        csvRecords.forEach(csvRecord => {
+            const key = `${csvRecord.date}|${csvRecord.municipality}`;
+            if (!existingKeys.has(key)) {
+                records.push(csvRecord);
+                existingKeys.add(key);
+                added++;
+            }
+        });
+
+        if (added > 0) {
+            migrateRecords();
+            saveRecordsToStorage();
+        }
+    } catch (e) {
+        console.warn("Could not merge CSV records into local storage:", e);
     }
 }
 
