@@ -259,18 +259,28 @@ async function initApp() {
         console.error('Error durante la inicialización de la app:', error);
     } finally {
         hideLoading();
+        // Perform Google Sheets sync asynchronously in background without blocking initial page render
+        setTimeout(syncGoogleSheetsInBackground, 500);
     }
 }
 
 // Loading screens helpers
 function showLoading() {
     const el = document.getElementById('loadingOverlay');
-    if (el) el.classList.remove('fade-out');
+    if (el) {
+        el.style.display = 'flex';
+        el.classList.remove('fade-out');
+    }
 }
 
 function hideLoading() {
     const el = document.getElementById('loadingOverlay');
-    if (el) el.classList.add('fade-out');
+    if (el) {
+        el.classList.add('fade-out');
+        setTimeout(() => {
+            el.style.display = 'none';
+        }, 500);
+    }
 }
 
 // ─── Records Loading & Saving ──────────────────────────────────────────
@@ -362,10 +372,16 @@ async function loadRecords() {
         });
         migrateRecords();
         removeInsignificantRainRecords();
-        await mergeCsvRecordsIntoStorage();
     }
 
-    // Now merge Google Sheets "Registros" data silently
+    const removedDuplicates = deduplicateRecords();
+    if (removedDuplicates > 0) {
+        saveRecordsToStorage();
+        console.info(`Removed ${removedDuplicates} duplicate rainfall measurement(s).`);
+    }
+}
+
+async function syncGoogleSheetsInBackground() {
     const googleSheetUrl = 'https://docs.google.com/spreadsheets/d/18KQKLhvhRgdBR3n-d3ZqcBGVV1HC_J1_XgoXuqLfPLI/gviz/tq?tqx=out:csv&sheet=Registros';
     try {
         const response = await fetch(googleSheetUrl);
@@ -429,6 +445,8 @@ async function loadRecords() {
                         migrateRecords();
                         removeInsignificantRainRecords();
                         saveRecordsToStorage();
+                        applyFilters();
+                        if (typeof updateReportYearsList === 'function') updateReportYearsList();
                         console.log(`Successfully merged updates from Google Sheets 'Registros' tab.`);
                     }
                 }
@@ -438,12 +456,6 @@ async function loadRecords() {
         }
     } catch (e) {
         console.warn("Failed to fetch/merge from Google Sheets 'Registros' tab:", e);
-    }
-
-    const removedDuplicates = deduplicateRecords();
-    if (removedDuplicates > 0) {
-        saveRecordsToStorage();
-        console.info(`Removed ${removedDuplicates} duplicate rainfall measurement(s).`);
     }
 }
 
