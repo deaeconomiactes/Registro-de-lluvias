@@ -1290,19 +1290,8 @@ function setFormSource(source = '') {
     if (!sourceType || !sourceDetail) return;
 
     const trimmed = (source || '').trim();
-    const sourceOption = Array.from(sourceType.options).find(option => option.value === source);
 
     if (!trimmed) {
-        sourceType.value = '';
-        sourceDetail.value = '';
-    } else if (sourceOption) {
-        sourceType.value = source;
-        // For known options (including 'Informante' and 'Otra'), keep the detail empty
-        sourceDetail.value = '';
-    } else {
-        sourceType.value = 'Otra';
-        sourceDetail.value = source;
-    }
         sourceType.value = '';
         sourceDetail.value = '';
     } else {
