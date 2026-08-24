@@ -247,9 +247,7 @@ async function initApp() {
     try {
         loadCustomSources();
         loadCustomLocalities();
-        loadCustomSources();
         await loadRecords();
-        loadCustomSources();
         populateDropdowns();
         setupDateInputs();
         initFormMap();
@@ -259,17 +257,20 @@ async function initApp() {
         initReportSection();
     } catch (error) {
         console.error('Error durante la inicialización de la app:', error);
+    } finally {
+        hideLoading();
     }
-    hideLoading();
 }
 
 // Loading screens helpers
 function showLoading() {
-    document.getElementById('loadingOverlay').classList.remove('fade-out');
+    const el = document.getElementById('loadingOverlay');
+    if (el) el.classList.remove('fade-out');
 }
 
 function hideLoading() {
-    document.getElementById('loadingOverlay').classList.add('fade-out');
+    const el = document.getElementById('loadingOverlay');
+    if (el) el.classList.add('fade-out');
 }
 
 // ─── Records Loading & Saving ──────────────────────────────────────────
@@ -312,29 +313,28 @@ function deduplicateRecords() {
 }
 
 async function loadRecords() {
-    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-    if (stored) {
-        records = JSON.parse(stored);
-        const isMock = records.length === 12 && records[0].date === '2026-05-15';
-        if (isMock) {
-            localStorage.removeItem(LOCAL_STORAGE_KEY);
-            return await loadRecords();
+    let loadedFromStorage = false;
+    try {
+        const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (stored) {
+            const parsed = JSON.parse(stored);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+                const isMock = parsed.length === 12 && parsed[0]?.date === '2026-05-15';
+                const hasLaterYears = parsed.some(r => r?.date && typeof r.date === 'string' && (r.date.startsWith('2024') || r.date.startsWith('2025')));
+                
+                if (!isMock && hasLaterYears) {
+                    records = parsed;
+                    loadedFromStorage = true;
+                } else {
+                    localStorage.removeItem(LOCAL_STORAGE_KEY);
+                }
+            }
         }
-        
-        const hasLaterYears = records.some(r => r.date.startsWith('2024') || r.date.startsWith('2025'));
-        if (!hasLaterYears) {
-            localStorage.removeItem(LOCAL_STORAGE_KEY);
-            return await loadRecords();
-        }
-        
-        records.forEach(r => {
-            if (r.department) r.department = sanitizeName(r.department);
-            if (r.municipality) r.municipality = sanitizeName(r.municipality);
-        });
-        migrateRecords();
-        removeInsignificantRainRecords();
-        await mergeCsvRecordsIntoStorage();
-    } else {
+    } catch (e) {
+        console.warn("Could not load records from localStorage:", e);
+    }
+
+    if (!loadedFromStorage || records.length === 0) {
         try {
             const response = await fetch('plantilla_registro_lluvias.csv');
             if (response.ok) {
@@ -355,6 +355,14 @@ async function loadRecords() {
         migrateRecords();
         removeInsignificantRainRecords();
         saveRecordsToStorage();
+    } else {
+        records.forEach(r => {
+            if (r?.department) r.department = sanitizeName(r.department);
+            if (r?.municipality) r.municipality = sanitizeName(r.municipality);
+        });
+        migrateRecords();
+        removeInsignificantRainRecords();
+        await mergeCsvRecordsIntoStorage();
     }
 
     // Now merge Google Sheets "Registros" data silently
@@ -471,24 +479,31 @@ async function mergeCsvRecordsIntoStorage() {
 }
 
 function saveRecordsToStorage() {
-    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(records));
+    try {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(records));
+    } catch (e) {
+        console.warn("Could not save records to localStorage (quota exceeded or storage disabled):", e);
+    }
 
-    // Auto-save to disk via local server API
-    fetch('/api/save', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(records)
-    })
-        .then(response => {
-            if (!response.ok) {
-                console.warn("Server responded with error while auto-saving CSV.");
-            }
+    // Auto-save to disk via local server API (only when on localhost)
+    const isLocalServer = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    if (isLocalServer) {
+        fetch('/api/save', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(records)
         })
-        .catch(err => {
-            console.warn("Local server auto-save offline or unavailable:", err);
-        });
+            .then(response => {
+                if (!response.ok) {
+                    console.warn("Server responded with error while auto-saving CSV.");
+                }
+            })
+            .catch(err => {
+                console.warn("Local server auto-save offline or unavailable:", err);
+            });
+    }
 }
 
 // ─── Dropdowns & Date Setup ─────────────────────────────────────────────
@@ -546,6 +561,13 @@ function setupDateInputs() {
 
 // ─── Maps Initialization ───────────────────────────────────────────────
 function initFormMap() {
+    if (typeof L === 'undefined') {
+        console.warn("Leaflet Library (L) not loaded. Form map disabled.");
+        return;
+    }
+    const mapEl = document.getElementById('formMap');
+    if (!mapEl) return;
+
     // Initialize form map (used to place the rain gauge marker)
     formMapInstance = L.map('formMap', {
         zoomControl: true,
@@ -564,6 +586,13 @@ function initFormMap() {
 }
 
 function initDashboardMap() {
+    if (typeof L === 'undefined') {
+        console.warn("Leaflet Library (L) not loaded. Dashboard map disabled.");
+        return;
+    }
+    const mapEl = document.getElementById('dashboardMap');
+    if (!mapEl) return;
+
     // Initialize dashboard map (displays bubble distribution of rain)
     dashboardMapInstance = L.map('dashboardMap', {
         zoomControl: true,
@@ -709,6 +738,8 @@ function updateHeaderStats() {
 
 // ─── Drawing Dashboard Map Bubbles ──────────────────────────────────────
 function drawDashboardMap() {
+    if (!dashboardMapInstance || typeof L === 'undefined') return;
+
     // Clear old layers
     dashboardMapLayers.forEach(layer => dashboardMapInstance.removeLayer(layer));
     dashboardMapLayers = [];
@@ -805,7 +836,10 @@ function drawDashboardMap() {
 
 // ─── Rendering Chart.js Charts ──────────────────────────────────────────
 function renderHistoryChart() {
-    const ctx = document.getElementById('chartRainHistory').getContext('2d');
+    if (typeof Chart === 'undefined') return;
+    const canvas = document.getElementById('chartRainHistory');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
     // Group rain records by date
     const dateGroups = {};
@@ -873,7 +907,10 @@ function renderHistoryChart() {
 }
 
 function renderMunicipalityChart() {
-    const ctx = document.getElementById('chartRainByMunicipality').getContext('2d');
+    if (typeof Chart === 'undefined') return;
+    const canvas = document.getElementById('chartRainByMunicipality');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
 
     // Group and sum by municipality (showing department too)
     const munGroups = {};
@@ -1223,47 +1260,6 @@ function addSourceOption(source, select, selectAfterAdding = false) {
     return option;
 }
 
-function loadCustomSources() {
-    const sourceType = document.getElementById('formSourceType');
-    if (!sourceType) return;
-    getCustomSources().forEach(source => addSourceOption(source, sourceType));
-}
-
-async function handleAddCustomSource() {
-    const result = await showCustomPrompt({
-        title: 'Agregar nueva fuente de información',
-        bodyHtml: '<p>Escriba el nombre de la nueva fuente. Quedará disponible para futuros registros en este navegador.</p>',
-        placeholder: 'Ej: Cooperativa, Estación local, Productor...',
-        confirmText: 'Agregar fuente',
-        cancelText: 'Cancelar'
-    });
-
-    if (result.action !== 'confirm') return;
-
-    const source = result.value.trim();
-    if (!source) {
-        showFloatingNotification('Debe ingresar un nombre válido para la fuente.', 'warning');
-        return;
-    }
-
-    const sourceType = document.getElementById('formSourceType');
-    const existingOption = Array.from(sourceType.options).find(option =>
-        option.value.toLowerCase() === source.toLowerCase()
-    );
-    if (existingOption) {
-        sourceType.value = existingOption.value;
-        updateSourceDetailVisibility();
-        showFloatingNotification('La fuente ya estaba disponible y fue seleccionada.', 'info');
-        return;
-    }
-
-    const customSources = getCustomSources();
-    customSources.push(source);
-    localStorage.setItem(CUSTOM_SOURCES_KEY, JSON.stringify(customSources));
-    addSourceOption(source, sourceType, true);
-    updateSourceDetailVisibility();
-    showFloatingNotification('Nueva fuente agregada y seleccionada.', 'success');
-}
 
 function getFormSource() {
     const sourceType = document.getElementById('formSourceType').value.trim();
